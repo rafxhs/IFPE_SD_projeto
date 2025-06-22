@@ -1,24 +1,35 @@
 <script setup>
-import { ref } from 'vue'
+import { ref, watch } from 'vue'
 import axios from 'axios'
 
 const userInput = ref('')
+const debouncedUserInput = ref('')
 const translatedText = ref('')
-const baseLanguage = ref('')
-const targetLanguage = ref('')
+const baseLanguage = ref('pt')
+const targetLanguage = ref('en')
+let timer = null
 
 function clearInput() {
   userInput.value = '' 
+  translatedText.value = ''
 }
 
 async function translate() {
   const response = await axios.post('http://localhost:3000/translate', {
-    text: userInput.value,
+    text: debouncedUserInput.value,
     sourceLanguage: baseLanguage.value,
     targetLanguage: targetLanguage.value
   })
   translatedText.value = response.data.translatedText
 }
+
+watch(userInput, (val) => {
+  clearTimeout(timer)
+  timer = setTimeout(() => {
+    debouncedUserInput.value = val
+    translate()
+  }, 500)
+})
 
 </script>
 
@@ -54,10 +65,6 @@ async function translate() {
           </svg>
         </button>
   </div>
-
-  <button @click="translate" class="bg-blue-500 text-white rounded-full py-2 px-4 hover:bg-blue-600 transition-colors duration-300">
-    Translate
-  </button>
 
   <div class="w-[623px] h-[auto] p-4 pr-12 rounded-lg p-4 bg-gray-200 shadow break-words whitespace-normal">
     <select v-model="targetLanguage" class="top-2 left-2 rounded-full text-gray-800 py-2 px-4 text-sm bg-white border border-gray-200" id="targetLanguageSelect">
