@@ -1,11 +1,23 @@
 <script setup>
 import { ref } from 'vue'
+import axios from 'axios'
+
 const userInput = ref('')
-const baseLanguage = ref('pt_BR')
-const targetLanguage = ref('en_US')
+const translatedText = ref('')
+const baseLanguage = ref('')
+const targetLanguage = ref('')
 
 function clearInput() {
   userInput.value = '' 
+}
+
+async function translate() {
+  const response = await axios.post('http://localhost:3000/translate', {
+    text: userInput.value,
+    sourceLanguage: baseLanguage.value,
+    targetLanguage: targetLanguage.value
+  })
+  translatedText.value = response.data.translatedText
 }
 
 </script>
@@ -18,10 +30,10 @@ function clearInput() {
       <div class="relative rounded-lg border border-gray-200">
 
          <select v-model="baseLanguage" class="absolute top-2 left-2 rounded-full text-gray-800 py-2 px-4 text-sm bg-white border border-gray-200" id="baseLanguageSelect">
-          <option value="pt_BR" selected>Português</option>
-          <option value="en_US">Inglês</option>
-          <option value="es_ES">Espanhol</option>
-          <option value="fr_FR">Francês</option>
+          <option value="pt" selected>Português</option>
+          <option value="en">Inglês</option>
+          <option value="es">Espanhol</option>
+          <option value="fr">Francês</option>
         </select>
 
         <br>
@@ -43,16 +55,20 @@ function clearInput() {
         </button>
   </div>
 
+  <button @click="translate" class="bg-blue-500 text-white rounded-full py-2 px-4 hover:bg-blue-600 transition-colors duration-300">
+    Translate
+  </button>
+
   <div class="w-[623px] h-[auto] p-4 pr-12 rounded-lg p-4 bg-gray-200 shadow break-words whitespace-normal">
     <select v-model="targetLanguage" class="top-2 left-2 rounded-full text-gray-800 py-2 px-4 text-sm bg-white border border-gray-200" id="targetLanguageSelect">
-          <option value="pt_BR" selected>Português</option>
-          <option value="en_US">Inglês</option>
-          <option value="es_ES">Espanhol</option>
-          <option value="fr_FR">Francês</option>
+          <option value="pt" selected>Português</option>
+          <option value="en">Inglês</option>
+          <option value="es">Espanhol</option>
+          <option value="fr">Francês</option>
         </select>
         <br>
         <p class="mt-2">
-          {{ userInput || 'Tradução' }}
+          {{ translatedText || 'Tradução' }}
         </p>
   </div>
 
