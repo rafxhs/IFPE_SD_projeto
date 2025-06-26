@@ -51,8 +51,8 @@ watch([baseLanguage, targetLanguage], () => {
         </div>
       </div>
     </nav>
-  <div class="flex flex-col min-h-screen w-screen items-start gap-4 bg-white pt-24 p-10 z-0">
-    <div class="flex flex-row space-x-4">   
+  <div class="flex flex-col min-h-screen w-screen items-center gap-4 bg-white pt-24 p-10 z-0">
+    <div class="flex flex-row justify-center space-x-4">   
       <div class="relative rounded-lg border border-gray-200">
 
          <select v-model="baseLanguage" class="absolute top-2 left-2 rounded-full text-gray-800 py-2 px-4 text-sm bg-white border border-gray-200" id="baseLanguageSelect">
