@@ -31,6 +31,12 @@ watch(userInput, (val) => {
   }, 500)
 })
 
+watch([baseLanguage, targetLanguage], () => {
+  if (debouncedUserInput.value) {
+    translate()
+  }
+})
+
 </script>
 
 <template>
