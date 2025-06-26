@@ -41,8 +41,17 @@ watch([baseLanguage, targetLanguage], () => {
 
 <template>
 <body>
-  <div class="flex flex-col h-screen w-screen items-start gap-4 bg-white p-10">
-    <h1>Tradutor SD</h1>
+    <nav class="fixed top-0 left-0 w-full bg-blue-50 shadow z-50">
+      <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+        <h1 class="text-xl font-semibold text-blue-800">LangFlow</h1>
+        <div class="space-x-4">
+          <a href="#" class="text-gray-600 hover:text-blue-950 text-sm">Início</a>
+          <a href="#" class="text-gray-600 hover:text-blue-950 text-sm">Histórico</a>
+          <a href="#" class="text-gray-600 hover:text-blue-950 text-sm">Idiomas</a>
+        </div>
+      </div>
+    </nav>
+  <div class="flex flex-col min-h-screen w-screen items-start gap-4 bg-white pt-24 p-10 z-0">
     <div class="flex flex-row space-x-4">   
       <div class="relative rounded-lg border border-gray-200">
 
@@ -59,20 +68,9 @@ watch([baseLanguage, targetLanguage], () => {
         v-model="userInput"
         class="w-[623px] h-[164px] mt-2 p-4 pr-12 p-4 bg-white text-gray-800 resize-none focus:outline-none focus:ring-0"
         />
-      
-        <button
-          @click="clearInput"
-          class="absolute top-2 right-2 rounded-full text-gray-800 py-2 px-2 text-sm hover:bg-gray-200"
-          aria-label="Fechar"
-        >
-          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" 
-            stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-          <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
-          </svg>
-        </button>
   </div>
 
-  <div class="w-[623px] h-[auto] p-4 pr-12 rounded-lg p-4 bg-gray-200 shadow break-words whitespace-normal">
+  <div class="w-[623px] h-[auto] p-4 pr-12 rounded-lg p-4 bg-gray-100 shadow break-words whitespace-normal">
     <select v-model="targetLanguage" class="top-2 left-2 rounded-full text-gray-800 py-2 px-4 text-sm bg-white border border-gray-200" id="targetLanguageSelect">
           <option value="pt" selected>Português</option>
           <option value="en">Inglês</option>
@@ -80,7 +78,7 @@ watch([baseLanguage, targetLanguage], () => {
           <option value="fr">Francês</option>
         </select>
         <br>
-        <p class="mt-2">
+        <p class="my-4">
           {{ translatedText || 'Tradução' }}
         </p>
   </div>
